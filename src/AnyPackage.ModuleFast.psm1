@@ -117,7 +117,7 @@ function Write-Package {
 
     process {
         $source = [PackageSourceInfo]::new($Location, $Location, $Request.ProviderInfo)
-        $package = [PackageInfo]::new($Name, $Version, $source, '', $null, @{ Guid = $Guid }, $Request.ProviderInfo)
+        $package = [PackageInfo]::new($Name, $ModuleVersion, $source, '', $null, @{ Guid = $Guid }, $Request.ProviderInfo)
         $Request.WritePackage($package)
     }
 }
