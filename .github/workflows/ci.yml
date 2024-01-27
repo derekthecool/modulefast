@@ -41,7 +41,7 @@ jobs:
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\AnyPackage.ModuleFast\
 
       - name: Install AnyPackage module
-        run: Install-Module AnyPackage -Force -AllowClobber
+        run: Install-Module AnyPackage, ModuleFast -Force -AllowClobber
 
       - name: Test with Pester
         run: |
@@ -103,7 +103,7 @@ jobs:
           path: '~/.local/share/powershell/Modules/AnyPackage.ModuleFast'
 
       - name: Install AnyPackage module
-        run: Install-Module AnyPackage -Force -AllowClobber
+        run: Install-Module AnyPackage, ModuleFast -Force -AllowClobber
 
       - name: Publish Module
         env:
