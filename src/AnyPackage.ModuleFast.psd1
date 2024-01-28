@@ -1,6 +1,6 @@
 @{
     RootModule = 'AnyPackage.ModuleFast.psm1'
-    ModuleVersion = '0.1.0'
+    ModuleVersion = '0.1.1'
     CompatiblePSEditions = @('Desktop', 'Core')
     GUID = '95ea8d7f-586e-42e1-83b2-2688f02d42e9'
     Author = 'Thomas Nieto'
