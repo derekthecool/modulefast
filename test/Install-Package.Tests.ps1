@@ -1,7 +1,8 @@
 #Requires -Modules AnyPackage.ModuleFast
 
 Describe Install-Package {
-    AfterEach {
+    BeforeEach {
+        New-Item -Path $env:LOCALAPPDATA\powershell\Modules -ItemType Directory
         Remove-Item -Path "$env:LOCALAPPDATA\powershell\Modules\*" -Recurse
     }
 
