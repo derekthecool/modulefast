@@ -48,8 +48,6 @@ jobs:
           $ht = Import-PowerShellDataFile PesterSettings.psd1
           $config = New-PesterConfiguration $ht
           Invoke-Pester -Configuration $config
-          Get-Module
-          Get-PackageProvider | select *
 
   Sign:
     needs: Test
