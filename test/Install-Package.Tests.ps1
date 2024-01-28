@@ -8,7 +8,7 @@ Describe Install-Package {
 
     Context 'with -Name parameter' {
         It 'should install' {
-            { Install-Package -Name Az } |
+            { Install-Package -Name Az -Verbose -Debug } |
             Should -Not -Throw
         }
     }
