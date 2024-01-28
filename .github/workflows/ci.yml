@@ -45,6 +45,8 @@ jobs:
 
       - name: Test with Pester
         run: |
+          Get-Module
+          Get-PackageProvider | select *
           $ht = Import-PowerShellDataFile PesterSettings.psd1
           $config = New-PesterConfiguration $ht
           Invoke-Pester -Configuration $config
