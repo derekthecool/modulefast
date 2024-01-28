@@ -28,8 +28,8 @@ class ModuleFastProvider : PackageProvider, IInstallPackage {
             $installModuleFast['Update'] = $request.DynamicParameters.Update
         }
 
-        if ($request.DynamicParameters.NoPathUpdate) {
-            $installModuleFast['NoPathUpdate'] = $request.DynamicParameters.NoPathUpdate
+        if ($request.DynamicParameters.NoProfileUpdate) {
+            $installModuleFast['NoProfileUpdate'] = $request.DynamicParameters.NoProfileUpdate
         }
 
         if ($request.DynamicParameters.NoPSModulePathUpdate) {
@@ -78,7 +78,7 @@ class InstallPackageDynamicParameters {
     [switch] $Update
 
     [Parameter()]
-    [switch] $NoPathUpdate
+    [switch] $NoProfileUpdate
 
     [Parameter()]
     [switch] $NoPSModulePathUpdate
