@@ -8,7 +8,7 @@ Describe Install-Package {
 
     Context 'with -Name parameter' {
         It 'should install' {
-            { Install-ModuleFast Az -Verbose -Debug } |
+            { Install-ModuleFast Microsoft.PowerShell.SecretStore -Verbose -Debug } |
             Should -Not -Throw
         }
     }
