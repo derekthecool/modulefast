@@ -8,7 +8,34 @@ using namespace NuGet.Versioning
 using namespace System.Management.Automation
 
 [PackageProvider('ModuleFast')]
-class ModuleFastProvider : PackageProvider, IInstallPackage {
+class ModuleFastProvider : PackageProvider, IFindPackage, IInstallPackage {
+    [void] FindPackage([PackageRequest] $request) {
+        $planModuleFast = @{ Plan = $true }
+
+        if ($request.DynamicParameters.Update) {
+            $planModuleFast['Update'] = $request.DynamicParameters.Update
+        }
+
+        if ($request.Source) {
+            $planModuleFast['Source'] = $request.Source
+        }
+
+        $spec = ''
+
+        if ($request.Prerelease) {
+            $spec += '!'
+        }
+
+        $spec += $request.Name
+
+        if ($request.Version) {
+            $spec += ":$($request.Version)"
+        }
+
+        Install-ModuleFast $spec @planModuleFast -ErrorAction Stop -PassThru |
+            Write-Package -Request $request
+    }
+
     [void] InstallPackage([PackageRequest] $request) {
         $installModuleFast = @{ }
 
@@ -53,15 +80,47 @@ class ModuleFastProvider : PackageProvider, IInstallPackage {
         }
 
         Install-ModuleFast $spec @installModuleFast -ErrorAction Stop -PassThru |
-        Write-Package -Request $request
+            Write-Package -Request $request
     }
 
     [object] GetDynamicParameters([string] $commandName) {
         return $(switch ($commandName) {
-            'Install-Package' { [InstallPackageDynamicParameters]::new() }
-            default { $null }
-        })
+                'Find-Package' { [FindPackageDynamicParameters]::new() }
+                'Install-Package' { [InstallPackageDynamicParameters]::new() }
+                default { $null }
+            })
     }
+
+    [string] RemoveSpec([string] $spec) {
+        $spec = $spec -replace '!', ''
+
+        if ($spec.Contains('>=')) {
+            return $spec.Split('>=')[0]
+        }
+        elseif ($spec.Contains('<=')) {
+            return $spec.Split('<=')[0]
+        }
+        elseif ($spec.Contains('=')) {
+            return $spec.Split('=')[0]
+        }
+        elseif ($spec.Contains(':')) {
+            return $spec.Split(':')[0]
+        }
+        elseif ($spec.Contains('<')) {
+            return $spec.Split('<')[0]
+        }
+        elseif ($spec.Contains('>')) {
+            return $spec.Split('>')[0]
+        }
+        else {
+            return $spec
+        }
+    }
+}
+
+class FindPackageDynamicParameters {
+    [Parameter()]
+    [switch] $Update
 }
 
 class InstallPackageDynamicParameters {
@@ -117,7 +176,7 @@ function Write-Package {
 
     process {
         $source = [PackageSourceInfo]::new($Location, $Location, $Request.ProviderInfo)
-        $package = [PackageInfo]::new($Name, $ModuleVersion, $source, '', $null, @{ Guid = $Guid }, $Request.ProviderInfo)
+        $package = [PackageInfo]::new($Name, $ModuleVersion, $source, '', @{ Guid = $Guid }, $Request.ProviderInfo)
         $Request.WritePackage($package)
     }
 }
