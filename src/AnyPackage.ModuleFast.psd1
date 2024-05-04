@@ -6,7 +6,7 @@
     Author = 'Thomas Nieto'
     Copyright = '(c) 2024 Thomas Nieto. All rights reserved.'
     Description = 'ModuleFast provider for AnyPackage.'
-    PowerShellVersion = '5.1'
+    PowerShellVersion = '7.2'
     RequiredModules = @(
         @{ ModuleName = 'AnyPackage'; ModuleVersion = '0.5.1' },
         @{ ModuleName = 'ModuleFast'; ModuleVersion = '0.1.2' })
