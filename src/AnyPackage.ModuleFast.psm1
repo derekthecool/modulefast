@@ -96,23 +96,17 @@ class ModuleFastProvider : PackageProvider, IFindPackage, IInstallPackage {
 
         if ($spec.Contains('>=')) {
             return $spec.Split('>=')[0]
-        }
-        elseif ($spec.Contains('<=')) {
+        } elseif ($spec.Contains('<=')) {
             return $spec.Split('<=')[0]
-        }
-        elseif ($spec.Contains('=')) {
+        } elseif ($spec.Contains('=')) {
             return $spec.Split('=')[0]
-        }
-        elseif ($spec.Contains(':')) {
+        } elseif ($spec.Contains(':')) {
             return $spec.Split(':')[0]
-        }
-        elseif ($spec.Contains('<')) {
+        } elseif ($spec.Contains('<')) {
             return $spec.Split('<')[0]
-        }
-        elseif ($spec.Contains('>')) {
+        } elseif ($spec.Contains('>')) {
             return $spec.Split('>')[0]
-        }
-        else {
+        } else {
             return $spec
         }
     }
