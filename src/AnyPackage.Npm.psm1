@@ -19,7 +19,13 @@ class NpmProvider : PackageProvider, IFindPackage, IInstallPackage
 
     [void] InstallPackage([PackageRequest] $request)
     {
-        & sudo npm install -g $request.Name
+        sudo npm install --global $request.Name
+
+        $source = [PackageSourceInfo]::new($request.Name, 'test', $Request.ProviderInfo)
+        # $package = [PackageInfo]::new($request.Name, $request.version, $source, $request.description, $null, $Request.ProviderInfo)
+        $package = [PackageInfo]::new($request.Name, $Request.ProviderInfo)
+        $Request.WritePackage($package)
+        # $request.Name | Write-Package -Request $request
     }
 
     [object] GetDynamicParameters([string] $commandName)
